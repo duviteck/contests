@@ -3,7 +3,7 @@ package others.sorting;
 /**
  * Created by duviteck. 15 Nov 2014.
  */
-public interface ISorting {
+public interface ISort {
     /**
      * Makes input array sorted
      */
