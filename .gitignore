@@ -1,7 +1,11 @@
+# Idea system files
+.idea
+*.iml
 *.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Contest-testing files
+*.in
+*.out
 
 # Package Files #
 *.jar
