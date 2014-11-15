@@ -1,6 +1,4 @@
-Solutions of different contest tasks
-
-## Contest
+## Contests
 * [Codeforces](http://codeforces.ru)
 * [HackerRank](https://www.hackerrank.com)
 * [Google Code Jam](https://code.google.com/codejam)
