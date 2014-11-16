@@ -10,13 +10,18 @@ import java.util.Random;
  */
 public class SortTest {
     private static final int TEST_ARRAY_LENGTH = 1000;
-    private static final int TEST_ATTEMPTS = 100;
+    private static final int TEST_ATTEMPTS = 1000;
     private static final Random random = new Random(System.currentTimeMillis());
-
+    private static final List<int[]> specialTestCases = new ArrayList<>();
     private static final List<ISort> sortings = new ArrayList<>();
+
     static {
         sortings.add(new InsertionSort());
         sortings.add(new SelectionSort());
+        sortings.add(new MergeSort());
+
+        specialTestCases.add(new int[0]);
+        specialTestCases.add(new int[] {1});
     }
 
     public static void main(String[] args) {
@@ -24,6 +29,12 @@ public class SortTest {
             int[] ar = generateTestArray(TEST_ARRAY_LENGTH);
             for (ISort sorting : sortings) {
                 checkSorting(sorting, ar);
+            }
+        }
+
+        for (int[] specialCase : specialTestCases) {
+            for (ISort sorting : sortings) {
+                checkSorting(sorting, specialCase);
             }
         }
 
@@ -38,6 +49,10 @@ public class SortTest {
     }
 
     private static void checkSorting(ISort sorting, int[] ar) {
+        if (ar == null || ar.length == 0) {
+            return;
+        }
+
         int[] copyArray = Arrays.copyOf(ar, ar.length);
         sorting.sort(copyArray);
 
