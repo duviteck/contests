@@ -1,30 +1,30 @@
 package others.sorting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by duviteck. 15 Nov 2014.
  */
 public class SortTest {
-    private static final int[] AR_1 = new int[] {5, 4, 3, 2, 1};
-    private static final int[] AR_2 = new int[] {5, 4, 3, 5, -1, 0, 0, 1, 2, 1};
-    private static final List<int[]> testArrays = new ArrayList<>();
+    private static final int TEST_ARRAY_LENGTH = 1000;
+    private static final int TEST_ATTEMPTS = 100;
+    private static final Random random = new Random(System.currentTimeMillis());
 
+    private static final List<ISort> sortings = new ArrayList<>();
     static {
-        testArrays.add(AR_1);
-        testArrays.add(AR_2);
+        sortings.add(new InsertionSort());
+        sortings.add(new SelectionSort());
     }
 
     public static void main(String[] args) {
-        ISort sorting = new InsertionSort();
-
-        for (int[] ar : testArrays) {
-            int[] testAr = new int[ar.length];
-            System.arraycopy(ar, 0, testAr, 0, ar.length);
-            sorting.sort(testAr);
-            printArray(testAr);
-            checkArray(testAr);
+        for (int i = 0; i < TEST_ATTEMPTS; i++) {
+            int[] ar = generateTestArray(TEST_ARRAY_LENGTH);
+            for (ISort sorting : sortings) {
+                checkSorting(sorting, ar);
+            }
         }
 
         System.out.println("All ok");
@@ -37,13 +37,25 @@ public class SortTest {
         System.out.println();
     }
 
-    private static void checkArray(int[] ar) {
-        int last = ar[0];
-        for (int i = 1; i < ar.length; i++) {
-            if (ar[i] < last) {
-                throw new IllegalStateException("Incorrect sorting");
+    private static void checkSorting(ISort sorting, int[] ar) {
+        int[] copyArray = Arrays.copyOf(ar, ar.length);
+        sorting.sort(copyArray);
+
+        int last = copyArray[0];
+        for (int i = 1; i < copyArray.length; i++) {
+            if (copyArray[i] < last) {
+                printArray(ar);     // print origin array
+                throw new IllegalStateException("Incorrect sorting for sorting " + sorting.getName());
             }
-            last = ar[i];
+            last = copyArray[i];
         }
+    }
+
+    private static int[] generateTestArray(int size) {
+        int[] ans = new int[size];
+        for (int i = 0; i < size; i++) {
+            ans[i] = random.nextInt();
+        }
+        return ans;
     }
 }

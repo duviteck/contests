@@ -8,4 +8,9 @@ public interface ISort {
      * Makes input array sorted
      */
     void sort(int[] ar);
+
+    /**
+     * Return name of sorting
+     */
+    String getName();
 }

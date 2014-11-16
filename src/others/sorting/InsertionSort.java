@@ -17,4 +17,9 @@ public class InsertionSort implements ISort {
             ar[j+1] = cur;
         }
     }
+
+    @Override
+    public String getName() {
+        return "Insertion";
+    }
 }
