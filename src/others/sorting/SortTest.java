@@ -19,6 +19,7 @@ public class SortTest {
         sortings.add(new InsertionSort());
         sortings.add(new SelectionSort());
         sortings.add(new MergeSort());
+        sortings.add(new QuickSort());
 
         specialTestCases.add(new int[0]);
         specialTestCases.add(new int[] {1});
