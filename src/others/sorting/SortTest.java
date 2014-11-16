@@ -16,10 +16,11 @@ public class SortTest {
     private static final List<ISort> sortings = new ArrayList<>();
 
     static {
-        sortings.add(new InsertionSort());
-        sortings.add(new SelectionSort());
+//        sortings.add(new InsertionSort());
+//        sortings.add(new SelectionSort());
         sortings.add(new MergeSort());
         sortings.add(new QuickSort());
+        sortings.add(new HeapSort());
 
         specialTestCases.add(new int[0]);
         specialTestCases.add(new int[] {1});
