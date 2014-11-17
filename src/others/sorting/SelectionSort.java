@@ -7,6 +7,10 @@ public class SelectionSort implements ISort {
 
     @Override
     public void sort(int[] ar) {
+        if (ar == null || ar.length <= 1) {
+            return;
+        }
+
         for (int i = 0; i < ar.length - 1; i++) {
             int min = ar[i];
             int minPos = i;

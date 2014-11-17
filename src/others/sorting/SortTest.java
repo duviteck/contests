@@ -21,7 +21,10 @@ public class SortTest {
         sortings.add(new MergeSort());
         sortings.add(new QuickSort());
         sortings.add(new HeapSort());
+//        sortings.add(new BubbleSort());
+        sortings.add(new CombSort());
 
+        specialTestCases.add(null);
         specialTestCases.add(new int[0]);
         specialTestCases.add(new int[] {1});
     }
@@ -52,6 +55,7 @@ public class SortTest {
 
     private static void checkSorting(ISort sorting, int[] ar) {
         if (ar == null || ar.length == 0) {
+            sorting.sort(ar);   // will crash in case of error
             return;
         }
 

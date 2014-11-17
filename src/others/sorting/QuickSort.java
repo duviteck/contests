@@ -7,6 +7,10 @@ public class QuickSort implements ISort {
 
     @Override
     public void sort(int[] ar) {
+        if (ar == null || ar.length <= 1) {
+            return;
+        }
+
         sort(ar, 0, ar.length);
     }
 

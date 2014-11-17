@@ -7,6 +7,10 @@ public class InsertionSort implements ISort {
 
     @Override
     public void sort(int[] ar) {
+        if (ar == null || ar.length <= 1) {
+            return;
+        }
+
         for (int i = 1; i < ar.length; i++) {
             int cur = ar[i];
             int j = i - 1;

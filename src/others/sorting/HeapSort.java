@@ -7,6 +7,10 @@ public class HeapSort implements ISort {
 
     @Override
     public void sort(int[] ar) {
+        if (ar == null || ar.length <= 1) {
+            return;
+        }
+
         buildHeap(ar);
         for (int len = ar.length - 1; len > 0; len--) {
             swap(ar, 0, len);

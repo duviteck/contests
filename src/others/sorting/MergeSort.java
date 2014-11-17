@@ -7,7 +7,7 @@ public class MergeSort implements ISort {
 
     @Override
     public void sort(int[] ar) {
-        if (ar.length <= 1) {
+        if (ar == null || ar.length <= 1) {
             return;
         }
 
