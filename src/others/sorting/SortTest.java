@@ -21,8 +21,9 @@ public class SortTest {
         sortings.add(new MergeSort());
         sortings.add(new QuickSort());
         sortings.add(new HeapSort());
-//        sortings.add(new BubbleSort());
+        sortings.add(new BubbleSort());
         sortings.add(new CombSort());
+        sortings.add(new RadixSort());
 
         specialTestCases.add(null);
         specialTestCases.add(new int[0]);
