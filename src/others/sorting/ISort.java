@@ -10,7 +10,7 @@ public interface ISort {
     void sort(int[] ar);
 
     /**
-     * Return name of sorting
+     * Return name of sorting algorithm
      */
     String getName();
 }

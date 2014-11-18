@@ -13,17 +13,17 @@ public class SortTest {
     private static final int TEST_ATTEMPTS = 1000;
     private static final Random random = new Random(System.currentTimeMillis());
     private static final List<int[]> specialTestCases = new ArrayList<>();
-    private static final List<ISort> sortings = new ArrayList<>();
+    private static final List<ISort> sortAlgorithms = new ArrayList<>();
 
     static {
-//        sortings.add(new InsertionSort());
-//        sortings.add(new SelectionSort());
-        sortings.add(new MergeSort());
-        sortings.add(new QuickSort());
-        sortings.add(new HeapSort());
-        sortings.add(new BubbleSort());
-        sortings.add(new CombSort());
-        sortings.add(new RadixSort());
+//        sortAlgorithms.add(new InsertionSort());
+//        sortAlgorithms.add(new SelectionSort());
+        sortAlgorithms.add(new MergeSort());
+        sortAlgorithms.add(new QuickSort());
+        sortAlgorithms.add(new HeapSort());
+        sortAlgorithms.add(new BubbleSort());
+        sortAlgorithms.add(new CombSort());
+        sortAlgorithms.add(new RadixSort());
 
         specialTestCases.add(null);
         specialTestCases.add(new int[0]);
@@ -33,13 +33,13 @@ public class SortTest {
     public static void main(String[] args) {
         for (int i = 0; i < TEST_ATTEMPTS; i++) {
             int[] ar = generateTestArray(TEST_ARRAY_LENGTH);
-            for (ISort sorting : sortings) {
+            for (ISort sorting : sortAlgorithms) {
                 checkSorting(sorting, ar);
             }
         }
 
         for (int[] specialCase : specialTestCases) {
-            for (ISort sorting : sortings) {
+            for (ISort sorting : sortAlgorithms) {
                 checkSorting(sorting, specialCase);
             }
         }
