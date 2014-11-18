@@ -11,14 +11,16 @@ import java.util.Random;
  * Created by duviteck. 18 Nov 2014.
  */
 public class SelectTest {
-    private static final int TEST_ARRAY_LENGTH = 1000;
-    private static final int TEST_ATTEMPTS = 1000;
+    private static final int TEST_ARRAY_MIN_LENGTH = 1000;
+    private static final int TEST_ARRAY_MAX_LENGTH = 5000;
+    private static final int TEST_ATTEMPTS = 10000;
     private static final Random random = new Random(System.currentTimeMillis());
     private static final List<Pair<int[], Integer>> specialTestCases = new ArrayList<>();
     private static final List<ISelect> selectAlgorithms = new ArrayList<>();
 
     static {
         selectAlgorithms.add(new QuickSelect());
+        selectAlgorithms.add(new MedianOfMediansSelect());
 
         specialTestCases.add(Pair.of((int[])null, 0));
         specialTestCases.add(Pair.of((int[])null, 1));
@@ -31,7 +33,7 @@ public class SelectTest {
 
     public static void main(String[] args) {
         for (int i = 0; i < TEST_ATTEMPTS; i++) {
-            Pair<int[], Integer> testCase = generateTestArray(TEST_ARRAY_LENGTH);
+            Pair<int[], Integer> testCase = generateTestArray();
             for (ISelect selection : selectAlgorithms) {
                 checkSelection(selection, testCase);
             }
@@ -44,13 +46,6 @@ public class SelectTest {
         }
 
         System.out.println("All ok");
-    }
-
-    private static void printArray(int[] ar) {
-        for (int a : ar) {
-            System.out.print(a + " ");
-        }
-        System.out.println();
     }
 
     private static void checkSelection(ISelect selection, Pair<int[], Integer> testCase) {
@@ -70,7 +65,9 @@ public class SelectTest {
         }
     }
 
-    private static Pair<int[], Integer> generateTestArray(int size) {
+    private static Pair<int[], Integer> generateTestArray() {
+        int size = TEST_ARRAY_MIN_LENGTH + random.nextInt(TEST_ARRAY_MAX_LENGTH - TEST_ARRAY_MIN_LENGTH + 1);
+
         int[] ar = new int[size];
         for (int i = 0; i < size; i++) {
             ar[i] = random.nextInt();
