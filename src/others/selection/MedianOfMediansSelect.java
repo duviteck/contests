@@ -4,6 +4,8 @@ package others.selection;
  * Created by duviteck. 19 Nov 2014.
  */
 public class MedianOfMediansSelect implements ISelect {
+    private static final int BUCKET_SIZE = 5;
+    private static final int INSERTION_SORT_THRESHOLD = 16;
 
     @Override
     public int select(int[] ar, int k) throws IllegalArgumentException {
@@ -11,14 +13,14 @@ public class MedianOfMediansSelect implements ISelect {
             throw new IllegalArgumentException("Incorrect input data");
         }
 
-        final int bucketSize = 5;
+        final int bucketSize = BUCKET_SIZE;
         return selectImpl(ar, 0, ar.length, k - 1, bucketSize);
     }
 
     private int selectImpl(int[] ar, int start, int end, int k, int bucketSize) {
         if (end - start == 1) {
             return ar[start];
-        } else if (end - start <= 16) {
+        } else if (end - start <= INSERTION_SORT_THRESHOLD) {
             insertionSort(ar, start, end);
             return ar[k];
         }
@@ -64,7 +66,7 @@ public class MedianOfMediansSelect implements ISelect {
     }
 
     private int determinePivot(int[] ar, int start, int end, int bucketSize) {
-        if (end - start <= 16) {
+        if (end - start <= INSERTION_SORT_THRESHOLD) {
             return getMedianByInsertionSort(ar, start, end);
         }
 
