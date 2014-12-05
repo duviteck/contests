@@ -1,4 +1,4 @@
-package leetcode.medium;
+package leetcode.hard;
 
 import java.util.Comparator;
 import java.util.HashMap;
