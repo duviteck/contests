@@ -1,16 +1,18 @@
 package cscenter.year_2014_2015.semester_1;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 /**
- * Little fridge
+ * Big fridge
  *
- * Created by duviteck. 24 Dec 2014.
+ * Created by duviteck. 03 Jan 2015.
  */
-public class Problem_1F_Advanced {
+public class Problem_1H_Hard {
 
     private static long n;
     private static List<PrimeMult> primes;
@@ -18,19 +20,34 @@ public class Problem_1F_Advanced {
     private static long[] curParams;
     private static long bestSquare;
 
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
+    private static StringBuilder sb = new StringBuilder(500 * 40);
 
-        initParams(s.nextLong());
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int tests = Integer.parseInt(reader.readLine());
 
-        calcAns();
+        for (int i = 0; i < tests; i++) {
+            initParams(reader);
 
-        printAns();
+            calcAns();
+
+            printAns();
+        }
+        System.out.println(sb.toString());
     }
 
-    private static void initParams(long num) {
-        n = num;
-        primes = factorize(n);
+    private static void initParams(BufferedReader reader) throws IOException {
+        int temp = Integer.parseInt(reader.readLine());
+        primes = new ArrayList<>(temp);
+        n = 1;
+
+        for (int i = 0; i < temp; i++) {
+            String[] tokens = reader.readLine().split(" ");
+            long prime = Integer.parseInt(tokens[0]);
+            int order = Integer.parseInt(tokens[1]);
+            primes.add(new PrimeMult(prime, order));
+            n *= (long) Math.pow(prime, order);
+        }
 
         bestParams = new long[3];
         Arrays.fill(bestParams, -1L);
@@ -40,7 +57,10 @@ public class Problem_1F_Advanced {
     }
 
     private static void printAns() {
-        System.out.format("%d %d %d %d\n", 2 * bestSquare, bestParams[0], bestParams[1], bestParams[2]);
+        sb.append(2 * bestSquare).append(" ");
+        sb.append(bestParams[0]).append(" ");
+        sb.append(bestParams[1]).append(" ");
+        sb.append(bestParams[2]).append("\n");
     }
 
     private static void calcAns() {
@@ -117,29 +137,6 @@ public class Problem_1F_Advanced {
         }
     }
 
-    private static List<PrimeMult> factorize(long n) {
-        List<PrimeMult> res = new ArrayList<>();
-        PrimeEratosGenerator primeGen = new PrimeEratosGenerator(n);
-        while (n > 1) {
-            int prime = primeGen.getNext();
-            if (prime == PrimeEratosGenerator.NO_VALUE) {
-                // n is already prime
-                res.add(new PrimeMult(n, 1));
-                break;
-            }
-
-            int power = 0;
-            while (n % prime == 0) {
-                power++;
-                n /= prime;
-            }
-            if (power > 0) {
-                res.add(new PrimeMult(prime, power));
-            }
-        }
-        return res;
-    }
-
 
     private static class PrimeMult {
         long prime;
@@ -148,54 +145,6 @@ public class Problem_1F_Advanced {
         public PrimeMult(long prime, int order) {
             this.prime = prime;
             this.order = order;
-        }
-    }
-
-
-    private static class PrimeEratosGenerator {
-        static final int NO_VALUE = -1;
-
-        byte[] sieve;
-        int max;
-        List<Integer> primes = new ArrayList<>();
-
-        public PrimeEratosGenerator(long maxVal) {
-            max = (int) Math.sqrt(maxVal);
-            sieve = new byte[max + 1];
-            sieve[0] = sieve[1] = 1;
-        }
-
-        public int getNext() {
-            if (max <= 1) {
-                return NO_VALUE;
-            }
-
-            int curPrimesCount = primes.size();
-            if (primes.isEmpty()) {
-                findNext(2);
-            } else {
-                findNext(primes.get(primes.size() - 1) + 1);
-            }
-
-            if (primes.size() == curPrimesCount) {
-                return NO_VALUE;
-            } else {
-                return primes.get(primes.size() - 1);
-            }
-        }
-
-        private void findNext(int val) {
-            while (val <= max) {
-                if (sieve[val] == 0) {
-                    primes.add(val);
-                    for (int i = val * 2; i <= max; i += val) {
-                        sieve[i] = 1;
-                    }
-                    return;
-                }
-
-                val++;
-            }
         }
     }
 }
