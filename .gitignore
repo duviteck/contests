@@ -6,6 +6,8 @@
 # Contest-testing files
 *.in
 *.out
+in.txt
+out.txt
 
 # Package Files #
 *.jar

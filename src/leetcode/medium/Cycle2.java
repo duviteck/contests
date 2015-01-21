@@ -5,21 +5,13 @@ package leetcode.medium;
  */
 public class Cycle2 {
 
-    public static void main(String[] args) {
-        System.out.println(detectCycle(null));
-    }
-
     public static ListNode detectCycle(ListNode head) {
-        if (head == null) {
-            return null;
-        }
-        if (head.next == null) {
+        if (head == null || head.next == null) {
             return null;
         }
 
         ListNode slow = head.next;
         ListNode fast = head.next.next;
-
 
         while (fast != null && fast.next != null) {
             if (slow.val == fast.val) {
