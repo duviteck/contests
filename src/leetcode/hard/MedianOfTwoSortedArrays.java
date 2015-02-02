@@ -5,33 +5,63 @@ package leetcode.hard;
  */
 public class MedianOfTwoSortedArrays {
 
-    // not finished yet
+    public static void main(String[] args) {
+        MedianOfTwoSortedArrays instance = new MedianOfTwoSortedArrays();
+        System.out.println(instance.findMedianSortedArrays(new int[]{1, 2}, new int[]{1, 2}));
+    }
 
-//    public double findMedianSortedArrays(int[] a, int[] b) {
-//        // TODO: error check
-//
-//        int size = a.length + b.length;
-//        if (size % 2 == 1) {
-//            return kth(a, 0, a.length, b, 0, b.length, size / 2);
-//        } else {
-//            int med1 = kth(a, 0, a.length, b, 0, b.length, size / 2 - 1);
-//            int med2 = kth(a, 0, a.length, b, 0, b.length, size / 2);
-//            return (med1 + med2) / 2.0;
-//        }
-//    }
-//
-//    public int kth(int[] a, int aStart, int aEnd, int[] b, int bStart, int bEnd, int k) {
-//        if (aStart == aEnd) {
-//            return kth(b, bStart, bEnd, k);
-//        } else if (bStart == bEnd) {
-//            return kth(a, aStart, aEnd, k);
-//        }
-//
-//        int aMedIndex = (aStart + aEnd) / 2;
-//        int aMed = a[aMedIndex];
-//        int bMedIndex = (bStart + bEnd) / 2;
-//        int bMed = b[bMedIndex];
-//
-//
-//    }
+    public double findMedianSortedArrays(int A[], int B[]) {
+        int totalLength = A.length + B.length;
+        if (totalLength % 2 == 1) {
+            return findKth(A, B, (totalLength + 1) / 2);
+        } else {
+            double part1 = findKth(A, B, totalLength / 2);
+            double part2 = findKth(A, B, totalLength / 2 + 1);
+            return (part1 + part2) / 2;
+        }
+    }
+
+    private int findKth(int[] a, int[] b, int k) {
+        return findKth(a, 0, a.length - 1, b, 0, b.length - 1, k);
+    }
+
+    private int findKth(int[] a, int as, int ae, int[] b, int bs, int be, int k) {
+        // case of 1 left array
+        if (as > ae) {
+            return findKth(b, bs, k);
+        } else if (bs > be) {
+            return findKth(a, as, k);
+        }
+
+        // common case
+        int am = (as + ae) / 2;
+        int bm = (bs + be) / 2;
+        if (a[am] < b[bm]) {
+            return findKthOrderedArrays(a, as, ae, b, bs, be, k);
+        } else {
+            return findKthOrderedArrays(b, bs, be, a, as, ae, k);
+        }
+    }
+
+    private int findKthOrderedArrays(int[] a, int as, int ae, int[] b, int bs, int be, int k) {
+        // here surely a[am] <= b[bm]
+        int am = (as + ae) / 2;
+        int bm = (bs + be) / 2;
+        int totalLen = (ae - as + 1) + (be - bs + 1);
+        int leftLen = (am - as + 1);
+
+        if (k > totalLen / 2) {
+            return findKth(a, am + 1, ae, b, bs, be, k - leftLen);
+        } else {
+            if (bs == be) { // b.length == 1
+                return findKth(a, as, ae, b, bs, bm - 1, k);
+            } else {
+                return findKth(a, as, ae, b, bs, bm, k);
+            }
+        }
+    }
+
+    private int findKth(int[] a, int as, int k) {
+        return a[as + k - 1];
+    }
 }
