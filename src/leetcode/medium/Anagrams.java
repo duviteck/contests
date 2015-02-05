@@ -40,7 +40,7 @@ public class Anagrams {
 
         public LetterSet(String line) {
             for (char c : line.toCharArray()) {
-                int i = (int) (c - 'a');
+                int i = c - 'a';
                 letters[i]++;
             }
 
