@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by duviteck. 02 Dec 2014.
  */
-class MinStack {
+public class MinStack {
     private List<ValObject> stack = new ArrayList<>();
     private int minVal = Integer.MAX_VALUE;
 
