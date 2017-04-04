@@ -159,11 +159,11 @@ public class Problem_B_HullPerimeter implements Runnable {
 
     }
 
-    class PointPolarAngleComparator<MyPoint> implements Comparator<MyPoint> {
+    class PointPolarAngleComparator implements Comparator<MyPoint> {
         @Override
         public int compare(MyPoint o1, MyPoint o2) {
-            Problem_B_HullPerimeter.MyPoint p1 = (Problem_B_HullPerimeter.MyPoint)o1;
-            Problem_B_HullPerimeter.MyPoint p2 = (Problem_B_HullPerimeter.MyPoint)o2;
+            Problem_B_HullPerimeter.MyPoint p1 = o1;
+            Problem_B_HullPerimeter.MyPoint p2 = o2;
             if (p1.polarAngle == p2.polarAngle) {
                 return (p1.distToBase < p2.distToBase) ? -1 : (p1.distToBase > p2.distToBase) ? 1 : 0;
             } else {

@@ -21,21 +21,21 @@ public class QuickSort implements ISort {
 
         int mid = start + (end - start) / 2;
         int pivot = ar[mid];
-        swap(ar, mid, end - 1);
+        swap(ar, mid, end - 1); // now pivot is stored in last cell
 
-        int moreStart = start;
+        // keep array as [...less_than_pivot_items..., ...more_than_pivot_items..., pivot]
+
+        int firstMoreIndex = start;     // index of first item which is more than pivot
         for (int i = start; i < end; i++) {
             if (ar[i] <= pivot) {
-                int temp = ar[i];
-                ar[i] = ar[moreStart];
-                ar[moreStart] = temp;
-                moreStart++;
+                swap(ar, i, firstMoreIndex);
+                firstMoreIndex++;
             }
         }
 
-        // now pivot is at pos (moreStart - 1)
-        sort(ar, start, moreStart - 1);
-        sort(ar, moreStart, end);
+        // now pivot is at pos (firstMoreIndex - 1)
+        sort(ar, start, firstMoreIndex - 1);
+        sort(ar, firstMoreIndex, end);
     }
 
     private void swap(int[] ar, int pos1, int pos2) {

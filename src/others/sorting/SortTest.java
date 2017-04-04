@@ -31,6 +31,11 @@ public class SortTest {
     }
 
     public static void main(String[] args) {
+//        testQuickSortPerformance();
+        testSortingsCorrectness();
+    }
+
+    private static void testSortingsCorrectness() {
         for (int i = 0; i < TEST_ATTEMPTS; i++) {
             int[] ar = generateTestArray(TEST_ARRAY_LENGTH);
             for (ISort sorting : sortAlgorithms) {
@@ -45,6 +50,33 @@ public class SortTest {
         }
 
         System.out.println("All ok");
+    }
+
+    private static void testQuickSortPerformance() {
+        QuickSort quickSort = new QuickSort();
+        double speedLoose = 0;
+        for (int i = 0; i < TEST_ATTEMPTS; i++) {
+            int[] ar = generateTestArray(TEST_ARRAY_LENGTH);
+            int[] backSortedAr = getBackSortedArray(ar);
+            int[] sortedAr = Arrays.copyOf(ar, ar.length);
+            Arrays.sort(sortedAr);
+
+            long start = System.currentTimeMillis();
+            quickSort.sort(ar);
+            long end1 = System.currentTimeMillis();
+            quickSort.sort(backSortedAr);
+            long end2 = System.currentTimeMillis();
+
+            long randomSortTime = end1 - start;
+            long backSortTime = end2 - end1;
+            double curSpeedLoose = (double) backSortTime / (double) randomSortTime;
+
+            System.out.format("Time: %d %d Speed loose: %.4f\n", randomSortTime, backSortTime, curSpeedLoose);
+            speedLoose += curSpeedLoose;
+        }
+
+        speedLoose /= TEST_ATTEMPTS;
+        System.out.format("Average speed loose: %.4f", speedLoose);
     }
 
     private static void printArray(int[] ar) {
@@ -79,5 +111,29 @@ public class SortTest {
             ans[i] = random.nextInt();
         }
         return ans;
+    }
+
+    private static int[] getBackSortedArray(int[] ar) {
+        int[] arrayCopy = Arrays.copyOf(ar, ar.length);
+        Arrays.sort(arrayCopy);
+
+        int steps = arrayCopy.length / 2;
+        for (int i = 0; i < steps; i++) {
+            int temp = arrayCopy[i];
+            arrayCopy[i] = arrayCopy[arrayCopy.length - i - 1];
+            arrayCopy[arrayCopy.length - i - 1] = temp;
+        }
+
+        // check
+        int last = arrayCopy[0];
+        for (int i = 1; i < arrayCopy.length; i++) {
+            if (arrayCopy[i] > last) {
+                printArray(ar);     // print origin array
+                throw new IllegalStateException("Incorrect back sorting");
+            }
+            last = arrayCopy[i];
+        }
+
+        return arrayCopy;
     }
 }
