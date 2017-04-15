@@ -1,4 +1,4 @@
-package google_code_jam.year_2017.qualification;
+package google_code_jam.year_2017;
 
 //public abstract class TaskSolver {
 //
